@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Scan Results</title>
+</head>
+<body>
+    <h1>Full Scan Results</h1>
+    {% if result %}
+        <p>{{ result }}</p>
+    {% endif %}
+    
+    {% if scan_results %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>IP Address</th>
+                    <th>Scan Result</th>
+                    <th>Highest Accuracy CPE</th>
+                    <th>CVE Entries</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ip, result, highest_accuracy_cpe, cve_entries in scan_results %}
+                    <tr>
+                        <td>{{ ip }}</td>
+                        <td>{{ result }}</td>
+                        <td>{{ highest_accuracy_cpe }}</td>
+                        <td>
+                            {% if cve_entries %}
+                                <ul>
+                                    {% for cve_entry in cve_entries %}
+                                        <li>{{ cve_entry[0] }}: {{ cve_entry[1] }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                No CVEs found.
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</body>
+</html>
